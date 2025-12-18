@@ -1,5 +1,6 @@
 package com.example.demo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +35,7 @@ public class Staff {
   private String refreshToken;
 
   @ManyToMany(mappedBy = "staffs")
+  @JsonIgnoreProperties("staffs")
   private List<Project> projects;
 
   @ManyToOne(fetch = FetchType.LAZY)

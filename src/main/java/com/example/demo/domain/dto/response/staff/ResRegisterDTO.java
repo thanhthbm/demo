@@ -1,13 +1,14 @@
-package com.example.demo.domain.dto.request;
+package com.example.demo.domain.dto.response.staff;
 
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class ReqRegisterDTO {
+public class ResRegisterDTO {
+  private UUID id;
   private String name;
   private String email;
-  private String password;
   private String phone;
 }

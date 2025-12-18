@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.util.SecurityUtil;
+import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.util.Base64;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -13,7 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -33,6 +36,7 @@ public class SecurityConfiguration {
     String[] whiteList = {
         "/api/auth/login",
         "/api/auth/register",
+        "/api/auth/refresh",
     };
 
     http
@@ -59,10 +63,15 @@ public class SecurityConfiguration {
       try {
         return jwtDecoder.decode(token);
       } catch (Exception e) {
-        System.out.println(">>> JWT error: " + e.getMessage());
+        System.out.println("JWT error: " + e.getMessage());
         throw e;
       }
     };
+  }
+
+  @Bean
+  public JwtEncoder jwtEncoder() {
+    return new NimbusJwtEncoder(new ImmutableSecret<>(getSecretKey()));
   }
 
   private SecretKey getSecretKey() {

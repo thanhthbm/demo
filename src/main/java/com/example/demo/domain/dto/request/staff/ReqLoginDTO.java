@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto.request;
+package com.example.demo.domain.dto.request.staff;
 
 import lombok.Builder;
 import lombok.Data;

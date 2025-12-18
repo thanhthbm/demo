@@ -1,6 +1,6 @@
-package com.example.demo.domain.dto.response;
+package com.example.demo.domain.dto.response.staff;
 
-import com.example.demo.domain.entity.Department;
+import com.example.demo.domain.dto.response.department.ResDepartmentDTO;
 import com.example.demo.domain.entity.Project;
 import java.util.List;
 import java.util.UUID;
@@ -15,5 +15,5 @@ public class ResStaffDTO {
   private String email;
   private String phone;
   private List<Project> projects;
-  private Department department;
+  private ResDepartmentDTO department;
 }

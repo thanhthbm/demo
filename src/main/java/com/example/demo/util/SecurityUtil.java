@@ -1,6 +1,6 @@
 package com.example.demo.util;
 
-import com.example.demo.domain.dto.response.ResLoginDTO;
+import com.example.demo.domain.dto.response.staff.ResLoginDTO;
 import com.nimbusds.jose.util.Base64;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

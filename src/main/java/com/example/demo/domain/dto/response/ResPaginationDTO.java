@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResPaginationDTO {
   private Meta meta;
-  private Object data;
+  private Object result;
 
   @Getter
   @Setter
