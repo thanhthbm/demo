@@ -14,6 +14,7 @@ import com.example.demo.util.exception.ResourceAlreadyExistException;
 import com.example.demo.util.exception.ResourceNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +67,9 @@ public class StaffService {
   }
 
   public ResStaffDTO getStaffById(UUID id){
-    return UserMapper.staffToStaffDTO(this.staffRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Staff with id: " + id + " not found")));
+    Optional<Staff> staffOptional = this.staffRepository.findById(id);
+    if (!staffOptional.isPresent()) throw new ResourceNotFoundException("Staff with id: " + id + " not found");
+    return UserMapper.staffToStaffDTO(staffOptional.get());
   }
 
   public ResPaginationDTO getStaffs(String query, Pageable pageable) {
