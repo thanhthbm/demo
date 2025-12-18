@@ -6,6 +6,7 @@ import com.example.demo.service.DepartmentService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class DepartmentController {
   }
 
   @GetMapping
-  public ResponseEntity<Object> getAll(Pageable pageable) {
+  public ResponseEntity<Object> getAll(@PageableDefault(page = 1, size = 10) Pageable pageable) {
     return ResponseEntity.ok(departmentService.getAll(pageable));
   }
 
