@@ -137,7 +137,7 @@ public class AuthController {
     resLoginDTO.setAccessToken(accessToken);
 
     String newRefreshToken = this.securityUtil.createRefreshToken(resLoginDTO);
-    this.staffService.updateRefreshToken(accessToken, newRefreshToken);
+    this.staffService.updateRefreshToken(newRefreshToken, email);
 
     ResponseCookie resCookies = ResponseCookie
         .from("refresh_token", newRefreshToken)

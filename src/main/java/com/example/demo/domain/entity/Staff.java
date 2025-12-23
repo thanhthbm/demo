@@ -1,6 +1,7 @@
 package com.example.demo.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,8 @@ public class Staff {
   private String email;
   private String password;
   private String phone;
+
+  @Column(columnDefinition = "TEXT")
   private String refreshToken;
 
   @ManyToMany(mappedBy = "staffs")
