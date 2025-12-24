@@ -10,12 +10,14 @@ import com.example.demo.domain.entity.Department;
 import com.example.demo.domain.entity.Staff;
 import com.example.demo.repository.DepartmentRepository;
 import com.example.demo.repository.StaffRepository;
+import com.example.demo.util.annotation.TrackTime;
 import com.example.demo.util.exception.ResourceAlreadyExistException;
 import com.example.demo.util.exception.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,7 +37,10 @@ public class StaffService {
     return this.staffRepository.findByEmail(username);
   }
 
-  public void updateRefreshToken(String refreshToken, String username) {
+  @TrackTime
+  public void updateRefreshToken(String refreshToken, String username) throws InterruptedException {
+
+    TimeUnit.SECONDS.sleep(2);
     Staff staff = this.findByUsername(username);
 
     if (staff != null) {
@@ -68,7 +73,7 @@ public class StaffService {
 
   public ResStaffDTO getStaffById(UUID id){
     Optional<Staff> staffOptional = this.staffRepository.findById(id);
-    if (!staffOptional.isPresent()) throw new ResourceNotFoundException("Staff with id: " + id + " not found");
+    if (staffOptional.isEmpty()) throw new ResourceNotFoundException("Staff with id: " + id + " not found");
     return UserMapper.staffToStaffDTO(staffOptional.get());
   }
 
@@ -90,7 +95,7 @@ public class StaffService {
     Page<Staff> staffPage = this.staffRepository.findAll(spec, pageable);
 
     List<ResStaffDTO> listStaffDTO = staffPage.getContent().stream()
-        .map(staff -> UserMapper.staffToStaffDTO(staff))
+        .map(UserMapper::staffToStaffDTO)
         .collect(Collectors.toList());
 
     ResPaginationDTO.Meta meta = ResPaginationDTO.Meta.builder()

@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import java.util.Arrays;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -15,7 +16,7 @@ public class CorsConfig {
     configuration.setAllowedOrigins(
         Arrays.asList("http://localhost:3000", "http://localhost:4173", "http://localhost:5173"));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    configuration.setAllowedHeaders(Arrays.asList("*"));
+    configuration.setAllowedHeaders(List.of("*"));
     configuration.setAllowCredentials(true);
     configuration.setMaxAge(3600L);
 

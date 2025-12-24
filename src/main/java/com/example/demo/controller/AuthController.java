@@ -80,10 +80,10 @@ public class AuthController {
   }
 
   @PostMapping("/logout")
-  public ResponseEntity<Void> logout() {
+  public ResponseEntity<Void> logout() throws InterruptedException {
     String email = SecurityUtil.getCurrentUserLogin().isPresent()
         ? SecurityUtil.getCurrentUserLogin().get() : "";
-    if ("".equals(email)) {
+    if (email.isEmpty()) {
       throw new IdInvalidException("Invalid access token");
     }
 
@@ -109,7 +109,8 @@ public class AuthController {
   }
 
   @GetMapping("/refresh")
-  public ResponseEntity<ResLoginDTO> refresh(@CookieValue(name = "refresh_token", defaultValue = "default") String refreshToken) throws IdInvalidException {
+  public ResponseEntity<ResLoginDTO> refresh(@CookieValue(name = "refresh_token", defaultValue = "default") String refreshToken)
+      throws IdInvalidException, InterruptedException {
     if ("default".equals(refreshToken)) {
       throw new IdInvalidException("Invalid refresh token");
     }
