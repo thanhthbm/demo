@@ -7,6 +7,7 @@ import com.example.demo.domain.entity.Staff;
 import com.example.demo.util.SecurityUtil;
 import com.example.demo.util.exception.IdInvalidException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -17,17 +18,18 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-  private final AuthenticationManagerBuilder authenticationManagerBuilder;
+  private final AuthenticationManager authenticationManager;
   private final StaffService staffService;
   private final SecurityUtil securityUtil;
 
   public ResLoginDTO login(ReqLoginDTO loginDTO) {
-    UsernamePasswordAuthenticationToken authenticationToken =new UsernamePasswordAuthenticationToken(
+
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
         loginDTO.getUsername(),
         loginDTO.getPassword()
     );
 
-    Authentication authentication =  authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    Authentication authentication =  authenticationManager.authenticate(authenticationToken);
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
